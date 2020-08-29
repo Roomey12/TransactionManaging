@@ -1,0 +1,52 @@
+<form class="container" [formGroup]="authService.formModel" autocomplete="off" (submit)="onSubmit()">
+    <div class="form-group required">
+      <label>UserName</label>
+      <input class="form-control" formControlName="UserName">
+      <label class="text-danger" *ngIf="authService.formModel.get('UserName').touched && authService.formModel.get('UserName').errors?.required">
+            This field is mandatory.
+      </label>
+    </div>
+    <div class="form-group required">
+      <label>Email</label>
+      <input class="form-control" formControlName="Email">
+      <label class="text-danger" *ngIf="authService.formModel.get('Email').touched && authService.formModel.get('Email').errors?.required">
+            This field is mandatory.
+        </label>
+      <label class="text-danger" *ngIf="authService.formModel.get('Email').touched && authService.formModel.get('Email').errors?.email">
+        Invalid email adress.
+      </label>
+    </div>
+    <div formGroupName="Passwords">
+      <div class="form-group required">
+        <label>Password</label>
+        <div class="password">
+          <input type="password" id="password-input" class="form-control" formControlName="Password">
+          <a href="#" id="passeye" class="password-control" (click)="show_hide_password(pas1)"></a>
+        </div>
+        <label class="text-danger" *ngIf="authService.formModel.get('Passwords.Password').touched && authService.formModel.get('Passwords.Password').errors?.required">
+            This field is mandatory.
+        </label>
+        <label class="text-danger" *ngIf="authService.formModel.get('Passwords.Password').touched && authService.formModel.get('Passwords.Password').errors?.minlength">
+            Minimum 6 characters required.
+        </label>
+      </div>
+      <div class="form-group required">
+        <label>Confirm password</label>
+        <div class="password">
+          <input type="password" id="confirm-password-input" class="form-control" formControlName="ConfirmPassword">
+          <a href="#" id="confirm-passeye" class="password-control" (click)="show_hide_password(pas2)"></a>
+        </div>
+        <label class="text-danger" *ngIf="authService.formModel.get('Passwords.ConfirmPassword').touched && authService.formModel.get('Passwords.ConfirmPassword').errors?.required">
+            This field is mandatory.
+        </label>
+        <label class="text-danger" *ngIf="authService.formModel.get('Passwords.ConfirmPassword').touched && authService.formModel.get('Passwords.ConfirmPassword').errors?.passwordMismatch">
+            Passwords missmatch.
+        </label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-8 offset-md-2">
+        <button type="submit" class="btn btn-lg btn-block" [disabled]="!authService.formModel.valid">Sign Up</button>
+      </div>
+    </div>
+</form>

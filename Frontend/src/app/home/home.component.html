@@ -1,0 +1,140 @@
+<div class="row mt-4 mx-4" *ngIf="loaded">
+
+  <div class="col-3">
+    <div style="border: 2px solid black; width: 100%; height: 35vh;">
+      <div class="col-12" style="background-color:cornflowerblue; border-bottom: 2px solid black">
+        <h3>Transactions</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-9">
+    <div class="row pl-3 pr-2 mb-5">
+      <div class="dropdown">
+        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="setStatus">
+          Status
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div *ngFor="let s of statuses">
+            <label class="dropdown-item py-0" style="cursor: pointer;" (click)="setStatus(s)">{{ s }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown mx-2">
+        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="setType">
+          Type
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div *ngFor="let t of types">
+            <label class="dropdown-item py-0" style="cursor: pointer;" (click)="setType(t)">{{ t }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="user" class="row mx-auto">
+        <h6 class="my-auto mx-3">UserName: {{user.userName}}</h6>
+        <h6 class="my-auto">Email: {{user.email}}</h6>
+      </div>
+      <div *ngIf="!user" class="row mx-auto">
+        <label>You can login.</label>
+      </div>
+
+    <label for="files" class="btn btn-outline-dark ml-auto">Import</label>
+    <input id="files" type='file' style="display: none;" (change)="importTransactions($event)">
+    <label class="btn mx-2 btn-outline-dark" data-toggle="modal" data-target="#modalexport">Export</label>
+  </div>
+    
+    <div class="modal fade" id="modalexport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Export data</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group required mx-auto">
+                <div class="dropdown">
+                    <label class="text-center">Choose data to export</label><br>
+                    <input type="checkbox" id="transactionId" checked> TransactionId<br>
+                    <input type="checkbox" id="status" checked> Status<br>
+                    <input type="checkbox" id="type" checked> Type<br>
+                    <input type="checkbox" id="clientName" checked> Client Name<br>
+                    <input type="checkbox" id="amount" checked> Amount<br>
+                </div>
+              </div>
+              <div class="form-row text-center">
+                  <div class="form-group col-12">
+                    <button type="submit" class="btn btn-success" (click)="exportTransactions()">Export</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center">
+      <table class="table-striped table-bordered col-12">
+        <thead class="thead-dark">
+          <tr>
+            <td scope="col">Id</td>
+            <td scope="col">Status</td>
+            <td scope="col">Type</td>
+            <td scope="col">Client name</td>
+            <td scope="col">Amount</td>
+            <td scope="col">Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions | paginate: config">
+            <td scope="row">{{ t.transactionId }}</td>
+            <td>{{ t?.status }}</td>
+            <td>{{ t?.type }}</td>
+            <td>{{ t?.clientName }}</td>
+            <td>{{ t?.amount }}</td>
+            <td>
+              <button (click)="transactionToChange(t.transactionId)" data-toggle="modal" data-target="#modalchangetransaction" class="btn btn-sm btn-primary" style="margin-right: 5px">Edit</button>
+              <button (click)="deleteTransaction(t.transactionId)" class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+      </div>
+      
+      <div class="modal fade" id="modalchangetransaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group required">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusToEdit">
+                      Status
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <div *ngFor="let s of statuses">
+                        <a class="dropdown-item" (click)="setStatusForChanging(s)">{{ s }}</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-row text-center my-2">
+                    <div class="form-group col-12">
+                      <button type="submit" class="btn btn-success" (click)="changeStatus()">Save</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

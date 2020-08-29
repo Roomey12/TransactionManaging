@@ -1,0 +1,700 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TransactionsControl_CSV_Excel</name>
+    </assembly>
+    <members>
+        <member name="T:TransactionsControl_CSV_Excel.Controllers.AuthController">
+            <summary>
+            <c>AuthController</c> is a class.
+            Contains all http methods for authorization and authentication.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.AuthController.Register(TransactionsControl_CSV_Excel.Models.RegistrationModel)">
+            <summary>
+            This method is used to register a user.
+            </summary>
+            <param name="model">RegistrationModel object which contains userName, email and password.</param>
+            <returns>Result of registration.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.AuthController.Login(TransactionsControl_CSV_Excel.Models.LoginModel)">
+            <summary>
+            This method is used to authenticate user.
+            </summary>
+            <param name="model">LoginModel object which contains userName and password.</param>
+            <returns>JSON Web Token.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.AuthController.GetUserProfile">
+            <summary>
+            This method is used for getting current user by claims.
+            </summary>
+            <returns>Current user.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Controllers.FileController">
+            <summary>
+            <c>AuthController</c> is a class.
+            Contains http methods for reading csv and exporting xlsx files.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.FileController.PostCSVFile">
+            <summary>
+            This method creates transactions by imported csv file.
+            </summary>
+            <param name="formFile">CSV file with transaction's data.</param>
+            <returns>All transactions, included which were in csv file.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.FileController.GetTransactionsInXLSX(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties)">
+            <summary>
+            This method exports transactions into xlsx file.
+            </summary>
+            <param name="transStatus">Status of transaction.</param>
+            <param name="transType">Type of transaction.</param>
+            <param name="prop">Properties which should be returned.</param>
+            <returns>XLSX file with transaction's data.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Controllers.TransactionController">
+            <summary>
+            <c>TransactionController</c> is a class.
+            Contains http methods for working with transactions.
+            </summary>
+            <remarks>
+            This class can get, create, delete, edit, filter transactions.
+            </remarks>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.GetAllTransactions">
+            <summary>
+            This method returns all transactions.
+            </summary>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.GetTransactionById(System.Int32)">
+            <summary>
+            This method finds transaction by its Id and returns it.
+            </summary>
+            <param name="id">Id of transaction which should be returned.</param>
+            <returns>Transaction which was found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.PostTransaction(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method creates transaction.
+            </summary>
+            <param name="transaction">Transaction which should be created.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.PutTransaction(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method updates transaction's data.
+            </summary>
+            <param name="transaction">Transaction which should be updated.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.DeleteTransaction(System.Int32)">
+            <summary>
+            This method deletes transaction.
+            </summary>
+            <param name="id">Id of transaction which should be deleted.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.GetStatuses">
+            <summary>
+            This method returns all transaction statuses.
+            </summary>
+            <returns>Transactions statuses which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.GetTypes">
+            <summary>
+            This method returns all transaction types.
+            </summary>
+            <returns>Transactions types which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Controllers.TransactionController.GetFilteredTransactions(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.Pagination)">
+            <summary>
+            This method returns certain count of transactions which can be filtered by type and status of transaction.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <param name="pagination">Seeting for transactions count.</param>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.EF.ApplicationContext">
+            <summary>
+            <c>ApplicationContext</c> is a class.
+            Represents settings for database.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.EF.ApplicationContext.Transactions">
+            <summary>
+            Represents table for <see cref="T:TransactionsControl_CSV_Excel.Entities.Transaction"/> class.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Entities.Transaction">
+            <summary>
+            Entity Transaction is a class which is represented in SQL Server Table.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Entities.Transaction.TransactionId">
+            <summary>
+            Gets or sets TransactionId value.
+            Represents primary key.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Entities.Transaction.Status">
+            <summary>
+            Gets or sets Status value.
+            Represents status of Transaction.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Entities.Transaction.Type">
+            <summary>
+            Gets or sets Type value.
+            Represents type of Transaction.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Entities.Transaction.ClientName" -->
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Entities.Transaction.Amount" -->
+        <member name="T:TransactionsControl_CSV_Excel.Entities.Type">
+            <summary>
+            Represents enumeration of <c>Transaction</c> types.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Entities.Status">
+            <summary>
+            Represents enumeration of <c>Transaction</c> statuses.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Entities.User">
+            <summary>
+            Entity <c>User</c> is a class which is represented in SQL Server Table.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:TransactionsControl_CSV_Excel.Infrastucture.ApplicationSettings" -->
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.ApplicationSettings.JWT_Secret">
+            <summary>
+            Gets or sets <c>JWT_Secret</c> value.
+            Represents secret key for hashing signature of jwt.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.ApplicationSettings.Client_URL">
+            <summary>
+            Gets or sets <c>Client_URL</c> value.
+            Represents url of application which is allowed to sends requests to this API.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Infrastucture.NotFoundException">
+            <summary>
+            <c>NotFoundException</c> is a class.
+            Represents custom exception which is thrown when item was not found.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.NotFoundException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TransactionsControl_CSV_Excel.Infrastucture.NotFoundException"/> with specified error message and property.
+            </summary>
+            <param name="message">Error message.</param>
+            <param name="prop">Property which cause exception.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.NotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TransactionsControl_CSV_Excel.Infrastucture.NotFoundException"/> with specified error message.
+            </summary>
+            <param name="message">Error message.</param>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Infrastucture.ValidationException">
+            <summary>
+            <c>ValidationException</c> is a class.
+            Represents custom exception which is thrown when occured error in logic of program.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.ValidationException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TransactionsControl_CSV_Excel.Infrastucture.ValidationException"/> with specified error message and property.
+            </summary>
+            <param name="message">Error message.</param>
+            <param name="prop">Property which cause exception.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TransactionsControl_CSV_Excel.Infrastucture.ValidationException"/> with specified error message.
+            </summary>
+            <param name="message">Error message.</param>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Infrastucture.Pagination">
+            <summary>
+            <c>Pagination</c> is a class.
+            Represents settings of pagination.
+            </summary>
+        </member>
+        <member name="F:TransactionsControl_CSV_Excel.Infrastucture.Pagination.maxPageSize">
+            <summary>
+            Represents maximum page size.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.Pagination.PageNumber">
+            <summary>
+            Gets or sets PageNumber.
+            Represents number of page.
+            </summary>
+        </member>
+        <member name="F:TransactionsControl_CSV_Excel.Infrastucture.Pagination._pageSize">
+            <summary>
+            Represents default page size.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.Pagination.PageSize">
+            <summary>
+            Gets or sets PageSize.
+            Represents size of page.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Infrastucture.SampleData">
+            <summary>
+            <c>SampleData</c> is a class.
+            Represents class for database seeding.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.SampleData.Initialize(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            This method is used to initialize instances of database context and user manager.
+            </summary>
+            <param name="app">Class that provides the mechanisms to configure an application request's pipeline.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Infrastucture.SampleData.SeedData(TransactionsControl_CSV_Excel.EF.ApplicationContext,Microsoft.AspNetCore.Identity.UserManager{TransactionsControl_CSV_Excel.Entities.User})">
+            <summary>
+            This method is used to add seed data to database.
+            </summary>
+            <param name="context">Database context.</param>
+            <param name="userManager">Manager for creating user.</param>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties">
+            <summary>
+            <c>TransactionExportProperties</c> is a class.
+            Represents whether to export data for <see cref="T:TransactionsControl_CSV_Excel.Entities.Transaction"/> properties.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties.TransactionId">
+            <summary>
+            Gets or sets TransactionId value.
+            Represents whether to export data for property TransactionId.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties.Status">
+            <summary>
+            Gets or sets Status value.
+            Represents whether to export data for property Status.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties.Type">
+            <summary>
+            Gets or sets Type value.
+            Represents whether to export data for property Type.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties.ClientName">
+            <summary>
+            Gets or sets ClientName value.
+            Represents whether to export data for property ClientName.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties.Amount">
+            <summary>
+            Gets or sets Amount value.
+            Represents whether to export data for property Amount.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Interfaces.IAuthService">
+            <summary>
+            <c>IAuthService</c> is an interface.
+            Contains all methods for authorization and authentication.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IAuthService.Register(TransactionsControl_CSV_Excel.Models.RegistrationModel)">
+            <summary>
+            This method is used to register a user.
+            </summary>
+            <param name="registrationModel">User who is registrating.</param>
+            <returns>Result of registration.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IAuthService.Login(TransactionsControl_CSV_Excel.Models.LoginModel)">
+            <summary>
+            This method is used to authenticate user.
+            </summary>
+            <param name="loginModel">User who is authenticating.</param>
+            <returns>JSON Web Token.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IAuthService.GetUser(System.String)">
+            <summary>
+            This method is used for getting user by his id.
+            </summary>
+            <returns>User who was found.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Interfaces.IFileService">
+            <summary>
+            <c>IFileService</c> is an interface.
+            Contains methods for reading csv and exporting xlsx files.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IFileService.ReadCSVFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            This method creates transactions by imported csv file.
+            </summary>
+            <param name="formFile">CSV file with transaction's data.</param>
+            <returns>All transactions, included which were in csv file.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IFileService.ExportXLSXFile(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties)">
+            <summary>
+            This method exports transactions into xlsx file.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <param name="prop">Properties which should be returned.</param>
+            <returns>XLSX file with transaction's data.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Interfaces.IRepository`1">
+            <summary>
+            <c>IRepository</c> is a generic interface.
+            Contains methods for CRUD functional.
+            </summary>
+            <typeparam name="T">A type that is a class.</typeparam>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.GetAll">
+            <summary>
+            This method returns all items.
+            </summary>
+            <returns>items which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.Get(System.Int32)">
+            <summary>
+            This method finds item by its Id and returns it.
+            </summary>
+            <param name="id">Id of item which should be returned.</param>
+            <returns>Item which was found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.Find(System.Func{`0,System.Boolean})">
+            <summary>
+            This method findsitem by some condition.
+            </summary>
+            <param name="predicate">Condition by which the search will be performed.</param>
+            <returns>Items which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.Create(`0)">
+            <summary>
+            This method creates item.
+            </summary>
+            <param name="item">Item which should be created.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.Update(`0)">
+            <summary>
+            This method updates item's data.
+            </summary>
+            <param name="item">Item which data should be updated.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IRepository`1.Delete(System.Int32)">
+            <summary>
+            This method deletes item.
+            </summary>
+            <param name="id">Id of ttem which should be deleted.</param>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Interfaces.ITransactionService">
+            <summary>
+            <c>ITransactionService</c> is an interface.
+            Contains methods for working with transactions.
+            </summary>
+            <remarks>
+            This class can get, create, delete, edit, filter transactions.
+            </remarks>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.GetById(System.Int32)">
+            <summary>
+            This method finds transaction by its Id and returns it.
+            </summary>
+            <param name="id">Id of transaction which should be returned.</param>
+            <returns>Transaction which was found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.GetAll">
+            <summary>
+            This method returns all transactions.
+            </summary>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.Create(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method creates transaction.
+            </summary>
+            <param name="transaction">Transaction which should be created.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.Delete(System.Int32)">
+            <summary>
+            This method deletes transaction.
+            </summary>
+            <param name="id">Id of transaction which should be deleted.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.Update(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method updates transaction's data.
+            </summary>
+            <param name="transaction">Transaction which should be updated.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.GetStatuses">
+            <summary>
+            This method returns all transaction statuses.
+            </summary>
+            <returns>Transactions statuses which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.GetTypes">
+            <summary>
+            This method returns all transaction types.
+            </summary>
+            <returns>Transactions types which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.GetFilteredTransactions(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.Pagination)">
+            <summary>
+            This method returns certain count of transactions which can be filtered by type and status of transaction.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <param name="pagination">Seeting for transactions count.</param>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.ITransactionService.FilterTransactions(System.String,System.String)">
+            <summary>
+            This method filters transaction by their type and status.
+            </summary>
+            <returns>Filtered transactions.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Interfaces.IUnitOfWork">
+            <summary>
+            <c>IUnitOfWork</c> is an interface.
+            </summary>
+            <remarks>
+            This interface contains methods for return Repositories and saving data.
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Interfaces.IUnitOfWork.Transactions" -->
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Interfaces.IUnitOfWork.UserManager" -->
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IUnitOfWork.Save">
+            <summary>
+            Saves changes to the database. 
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Interfaces.IUnitOfWork.SaveAsync">
+            <summary>
+            Asynchronously saves changes to the database. 
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Models.LoginModel">
+            <summary>
+            LoginModel is a class.
+            Represents model for User.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.LoginModel.UserName">
+            <summary>
+            Gets or sets Username value.
+            Represents username of User who is authenticating.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.LoginModel.Password">
+            <summary>
+            Gets or sets Password value.
+            Represents password of User who is authenticating.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Models.PagedResponse`1">
+            <summary>
+            <c>PagedResponse</c> is a class.
+            Represents settings for response with <see cref="T:TransactionsControl_CSV_Excel.Infrastucture.Pagination"/> settings.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.PagedResponse`1.Data">
+            <summary>
+            Represents data which response consists.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.PagedResponse`1.TotalItems">
+            <summary>
+            Represents count of total items to paginate.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Models.RegistrationModel">
+            <summary>
+            RegistrationModel is a class.
+            Represents model for User.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.RegistrationModel.UserName">
+            <summary>
+            Gets or sets Username value.
+            Represents username of User who is registering.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.RegistrationModel.Email">
+            <summary>
+            Gets or sets Email value.
+            Represents email of User who is registering.
+            </summary>
+        </member>
+        <member name="P:TransactionsControl_CSV_Excel.Models.RegistrationModel.Password">
+            <summary>
+            Gets or sets Password> value.
+            Represents password of User who is registering.
+            </summary>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Repositories.TransactionRepository">
+            <summary>
+            <c>TransactionRepository</c> is a class.
+            Contains methods for CRUD functional.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.Create(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method creates transaction.
+            </summary>
+            <param name="transaction">Transaction which should be created.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.Delete(System.Int32)">
+            <summary>
+            This method deletes transaction.
+            </summary>
+            <param name="transactionId">Id of transaction which should be deleted.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.Find(System.Func{TransactionsControl_CSV_Excel.Entities.Transaction,System.Boolean})">
+            <summary>
+            This method finds transaction by some condition.
+            </summary>
+            <param name="predicate">Condition by which the search will be performed.</param>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.Get(System.Int32)">
+            <summary>
+            This method finds transaction by its Id and returns it.
+            </summary>
+            <param name="transactionId">Id of transaction which should be returned.</param>
+            <returns>Transaction which was found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.GetAll">
+            <summary>
+            This method returns all transactions.
+            </summary>
+            <returns>Transaction which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.TransactionRepository.Update(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method updates transaction's data.
+            </summary>
+            <param name="transaction">Transaction which should be updated.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:TransactionsControl_CSV_Excel.Repositories.UnitOfWork" -->
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Repositories.UnitOfWork.Transactions" -->
+        <!-- Badly formed XML comment ignored for member "P:TransactionsControl_CSV_Excel.Repositories.UnitOfWork.UserManager" -->
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.UnitOfWork.Save">
+            <summary>
+            Saves changes to the database. 
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Repositories.UnitOfWork.SaveAsync">
+            <summary>
+            Asynchronously saves changes to the database. 
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:TransactionsControl_CSV_Excel.Services.AuthService" -->
+        <member name="M:TransactionsControl_CSV_Excel.Services.AuthService.Register(TransactionsControl_CSV_Excel.Models.RegistrationModel)">
+            <summary>
+            This method is used to register a user.
+            </summary>
+            <param name="registrationModel">User who is registrating.</param>
+            <returns>Result of registration.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.AuthService.Login(TransactionsControl_CSV_Excel.Models.LoginModel)">
+            <summary>
+            This method is used to authenticate user.
+            </summary>
+            <param name="loginModel">User who is authenticating.</param>
+            <returns>JSON Web Token.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.AuthService.GetUser(System.String)">
+            <summary>
+            This method is used for getting user by id.
+            </summary>
+            <returns>User whi was found.</returns>
+        </member>
+        <member name="T:TransactionsControl_CSV_Excel.Services.FileService">
+            <summary>
+            <c>FileService</c> is a class.
+            Contains methods for reading csv and exporting xlsx files.
+            </summary>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.FileService.ExportXLSXFile(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.TransactionExportProperties)">
+            <summary>
+            This method exports transactions into xlsx file.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <param name="prop">Properties which should be returned.</param>
+            <returns>XLSX file with transaction's data.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.FileService.ReadCSVFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            This method creates transactions by imported csv file.
+            </summary>
+            <param name="formFile">CSV file with transaction's data.</param>
+            <returns>All transactions, included which were in csv file.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.Create(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method creates transaction.
+            </summary>
+            <param name="transaction">Transaction which should be created.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.Delete(System.Int32)">
+            <summary>
+            This method deletes transaction.
+            </summary>
+            <param name="id">Id of transaction which should be deleted.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.GetAll">
+            <summary>
+            This method returns all transactions.
+            </summary>
+            <returns>Transactions which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.GetById(System.Int32)">
+            <summary>
+            This method finds transaction by its Id and returns it.
+            </summary>
+            <param name="id">Id of transaction which should be returned.</param>
+            <returns>Transaction which was found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.Update(TransactionsControl_CSV_Excel.Entities.Transaction)">
+            <summary>
+            This method updates transaction's data.
+            </summary>
+            <param name="transactionData">Transaction which should be updated.</param>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.GetStatuses">
+            <summary>
+            This method returns all transaction statuses.
+            </summary>
+            <returns>Transactions statuses which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.GetTypes">
+            <summary>
+            This method returns all transaction types.
+            </summary>
+            <returns>Transactions types which were found.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.FilterTransactions(System.String,System.String)">
+            <summary>
+            This method filters transaction by their type and status.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <returns>Filtered transactions.</returns>
+        </member>
+        <member name="M:TransactionsControl_CSV_Excel.Services.TransactionService.GetFilteredTransactions(System.String,System.String,TransactionsControl_CSV_Excel.Infrastucture.Pagination)">
+            <summary>
+            This method returns certain count of transactions which can be filtered by type and status of transaction.
+            </summary>
+            <param name="type">Type of transaction.</param>
+            <param name="status">Status of transaction.</param>
+            <param name="pagination">Seeting for transactions count.</param>
+            <returns>Transactions which were found.</returns>
+        </member>
+    </members>
+</doc>
